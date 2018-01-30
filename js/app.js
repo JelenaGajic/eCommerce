@@ -73,6 +73,25 @@ new Vue({
                 }
             }
             return null;
+        },
+        increaseCartItem: function(cartItem) {
+            cartItem.quantity++;
+            cartItem.product.inStock--;
+        },
+        decreaseQuantity: function(cartItem) {
+            cartItem.quantity--;
+            cartItem.product.inStock++;
+            if(cardItem.quantity === 0) {
+                removeItemFromCart(cardItem);
+            }
+        },
+        removeItemFromCart: function(cartItem) {
+            var index = this.cart.items.indexOf(cartItem);
+
+            if(index >= 0){
+                this.cart.items.splice(index, 1);
+            }
+
         }
     },
     computed: {
