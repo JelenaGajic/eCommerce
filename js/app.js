@@ -1,6 +1,9 @@
 new Vue({
     el: '#app',
     data: {
+        cart: {
+            items: []
+        },
         products: [
             {
                 id: 1,
@@ -45,5 +48,25 @@ new Vue({
                 inStock: 81
             }
         ]
+    },
+    methods: {
+        addToCart: function(product) {
+            this.cart.items.push({
+                product: product,
+                quantity: 1
+            });
+            product.inStock--;
+        }
+    },
+    filters: {
+        currency: function(value) {
+            var formatter = Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0
+            });
+
+            return formatter.format(value);
+        }
     }
 });
