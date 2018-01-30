@@ -52,11 +52,27 @@ new Vue({
     },
     methods: {
         addToCart: function(product) {
-            this.cart.items.push({
-                product: product,
-                quantity: 1
-            });
+            var cartItem = this.getCardItem(product);
+
+            if(cartItem != null) {
+                cartItem.quantity++;
+            } else {
+                this.cart.items.push({
+                    product: product,
+                    quantity: 1
+                });
+            }
             product.inStock--;
+        },
+
+        // checking if the item is already in the cart
+        getCardItem: function(product) {
+            for (var i = 0; i < this.cart.items.length; i++) {
+                if(this.cart.items[i].product.id === product.id) {
+                    return this.cart.items[i];
+                }
+            }
+            return null;
         }
     },
     computed: {
